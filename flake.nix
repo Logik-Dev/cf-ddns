@@ -12,14 +12,20 @@
       utils,
       naersk,
     }:
-    utils.lib.eachDefaultSystem (
+    {
+    }
+    // utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs { inherit system; };
         naersk-lib = pkgs.callPackage naersk { };
       in
       {
+
+        nixosModules.default = import ./nixosModule self;
+
         defaultPackage = naersk-lib.buildPackage ./.;
+
         devShell =
           with pkgs;
           mkShell {
